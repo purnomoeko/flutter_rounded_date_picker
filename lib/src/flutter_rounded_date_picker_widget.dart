@@ -129,6 +129,8 @@ Future<DateTime> showRoundedDatePicker(
     EdgeInsets dialogPadding =
         const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
     Color barrierColor,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)
+        transitionBuilder,
     OnTapDay onTapDay}) async {
   initialDate ??= DateTime.now();
   firstDate ??= DateTime(initialDate.year - 1);
@@ -239,13 +241,14 @@ Future<DateTime> showRoundedDatePicker(
       ),
     ),
     transitionDuration: transitionDuration,
-    transitionBuilder: (_, Animation<double> anim, __, Widget child) {
-      return SlideTransition(
-        position:
-            Tween<Offset>(begin: const Offset(0, 1), end: const Offset(0, 0))
+    transitionBuilder: transitionBuilder ??
+        (_, Animation<double> anim, __, Widget child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+                    begin: const Offset(0, 1), end: const Offset(0, 0))
                 .animate(anim),
-        child: child,
-      );
-    },
+            child: child,
+          );
+        },
   );
 }
