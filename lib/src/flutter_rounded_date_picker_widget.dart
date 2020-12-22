@@ -122,6 +122,15 @@ Future<DateTime> showRoundedDatePicker(
     List<String> customWeekDays,
     BuilderDayOfDatePicker builderDay,
     List<DateTime> listDateDisabled,
+    Widget builderActions,
+    bool showHeader = false,
+    Alignment alignment = Alignment.bottomCenter,
+    Duration transitionDuration = const Duration(milliseconds: 300),
+    EdgeInsets dialogPadding =
+        const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+    Color barrierColor,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)
+        transitionBuilder,
     OnTapDay onTapDay}) async {
   initialDate ??= DateTime.now();
   firstDate ??= DateTime(initialDate.year - 1);
@@ -152,7 +161,8 @@ Future<DateTime> showRoundedDatePicker(
     'initialDatePickerMode must not be null',
   );
   assert(
-    (onTapActionButton != null && textActionButton != null) || onTapActionButton == null,
+    (onTapActionButton != null && textActionButton != null) ||
+        onTapActionButton == null,
     "If you provide onLeftBtn, you must provide leftBtn",
   );
   assert(context != null);
@@ -167,9 +177,7 @@ Future<DateTime> showRoundedDatePicker(
     child: Container(
       color: background,
       child: GestureDetector(
-        onTap: () {
-          //
-        },
+        onTap: () {},
         child: FlutterRoundedDatePickerDialog(
           height: height,
           initialDate: initialDate,
@@ -193,6 +201,9 @@ Future<DateTime> showRoundedDatePicker(
           builderDay: builderDay,
           listDateDisabled: listDateDisabled,
           onTapDay: onTapDay,
+          showHeader: showHeader,
+          builderActions: builderActions,
+          dialogPadding: dialogPadding,
         ),
       ),
     ),
@@ -213,9 +224,31 @@ Future<DateTime> showRoundedDatePicker(
     );
   }
 
-  return await showDialog<DateTime>(
+  return await showGeneralDialog<DateTime>(
     context: context,
+    barrierColor: barrierColor ?? Colors.black.withOpacity(0.5),
     barrierDismissible: barrierDismissible,
-    builder: (_) => Theme(data: theme, child: child),
+    barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+    pageBuilder: (_, __, ___) => Theme(
+      data: theme,
+      child: SafeArea(
+        child: Align(
+          alignment: alignment,
+          child: Container(
+            child: SingleChildScrollView(child: child),
+          ),
+        ),
+      ),
+    ),
+    transitionDuration: transitionDuration,
+    transitionBuilder: transitionBuilder ??
+        (_, Animation<double> anim, __, Widget child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+                    begin: const Offset(0, 1), end: const Offset(0, 0))
+                .animate(anim),
+            child: child,
+          );
+        },
   );
 }
