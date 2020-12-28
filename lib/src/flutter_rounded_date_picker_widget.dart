@@ -131,6 +131,9 @@ Future<DateTime> showRoundedDatePicker(
     Color barrierColor,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)
         transitionBuilder,
+    Color disabledIconColor,
+    IconData leftIcon,
+    IconData rightIcon,
     OnTapDay onTapDay}) async {
   initialDate ??= DateTime.now();
   firstDate ??= DateTime(initialDate.year - 1);
@@ -204,6 +207,9 @@ Future<DateTime> showRoundedDatePicker(
           showHeader: showHeader,
           builderActions: builderActions,
           dialogPadding: dialogPadding,
+          disabledIconColor: disabledIconColor,
+          leftIcon: leftIcon,
+          rightIcon: rightIcon,
         ),
       ),
     ),
