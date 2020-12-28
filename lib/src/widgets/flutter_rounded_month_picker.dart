@@ -46,12 +46,19 @@ class FlutterRoundedMonthPicker extends StatefulWidget {
       this.customWeekDays,
       this.builderDay,
       this.listDateDisabled,
+      this.disabledIconColor,
+      this.leftIcon,
+      this.rightIcon,
       this.onTapDay})
       : assert(selectedDate != null),
         assert(onChanged != null),
         assert(!firstDate.isAfter(lastDate)),
 //        assert(selectedDate.isAfter(firstDate) || selectedDate.isAtSameMomentAs(firstDate)),
         super(key: key);
+
+  final Color disabledIconColor;
+  final IconData leftIcon;
+  final IconData rightIcon;
 
   /// The currently selected date.
   ///
@@ -300,8 +307,9 @@ class _FlutterRoundedMonthPickerState extends State<FlutterRoundedMonthPicker> w
               child: FadeTransition(
                 opacity: _chevronOpacityAnimation,
                 child: IconButton(
+                  disabledColor: widget.disabledIconColor ?? Colors.black38,
                   icon: Icon(
-                    Icons.chevron_left,
+                    widget.leftIcon ?? Icons.chevron_left,
                     size: widget?.style?.sizeArrow,
                     color: widget?.style?.colorArrowPrevious,
                   ),
@@ -323,8 +331,9 @@ class _FlutterRoundedMonthPickerState extends State<FlutterRoundedMonthPicker> w
               child: FadeTransition(
                 opacity: _chevronOpacityAnimation,
                 child: IconButton(
+                  disabledColor: widget.disabledIconColor ?? Colors.black38,
                   icon: Icon(
-                    Icons.chevron_right,
+                    widget.rightIcon ?? Icons.chevron_right,
                     size: widget?.style?.sizeArrow,
                     color: widget?.style?.colorArrowNext,
                   ),

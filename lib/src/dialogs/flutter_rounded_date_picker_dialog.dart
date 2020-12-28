@@ -37,6 +37,9 @@ class FlutterRoundedDatePickerDialog extends StatefulWidget {
       this.builderActions,
       this.showHeader = false,
       this.dialogPadding,
+      this.disabledIconColor,
+      this.leftIcon,
+      this.rightIcon,
       this.onTapDay})
       : super(key: key);
 
@@ -50,6 +53,9 @@ class FlutterRoundedDatePickerDialog extends StatefulWidget {
   final bool showHeader;
   final Widget builderActions;
   final EdgeInsets dialogPadding;
+  final Color disabledIconColor;
+  final IconData leftIcon;
+  final IconData rightIcon;
 
   /// double height.
   final double height;
@@ -203,6 +209,9 @@ class _FlutterRoundedDatePickerDialogState
           builderDay: widget.builderDay,
           listDateDisabled: widget.listDateDisabled,
           onTapDay: widget.onTapDay,
+          leftIcon: widget.leftIcon,
+          rightIcon: widget.rightIcon,
+          disabledIconColor: widget.disabledIconColor,
         );
       case DatePickerMode.year:
         return FlutterRoundedYearPicker(
