@@ -308,10 +308,10 @@ class _FlutterRoundedMonthPickerState extends State<FlutterRoundedMonthPicker> w
                 opacity: _chevronOpacityAnimation,
                 child: IconButton(
                   disabledColor: widget.disabledIconColor ?? Colors.black38,
+                  color: widget?.style?.colorArrowPrevious,
                   icon: Icon(
                     widget.leftIcon ?? Icons.chevron_left,
                     size: widget?.style?.sizeArrow,
-                    color: widget?.style?.colorArrowPrevious,
                   ),
                   tooltip: _isDisplayingFirstMonth
                       ? null
@@ -332,10 +332,10 @@ class _FlutterRoundedMonthPickerState extends State<FlutterRoundedMonthPicker> w
                 opacity: _chevronOpacityAnimation,
                 child: IconButton(
                   disabledColor: widget.disabledIconColor ?? Colors.black38,
+                  color: widget?.style?.colorArrowNext,
                   icon: Icon(
                     widget.rightIcon ?? Icons.chevron_right,
                     size: widget?.style?.sizeArrow,
-                    color: widget?.style?.colorArrowNext,
                   ),
                   tooltip: _isDisplayingLastMonth
                       ? null
