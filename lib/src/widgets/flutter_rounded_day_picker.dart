@@ -462,17 +462,29 @@ class FlutterRoundedDayPicker extends StatelessWidget {
             ),
           ),
           Flexible(
-            child: GridView.custom(
-              gridDelegate: _kDayPickerGridDelegate,
-              childrenDelegate: SliverChildListDelegate(
-                labels,
-                addRepaintBoundaries: false,
+            child: ScrollConfiguration(
+              behavior: CustomBehavior(),
+              child: GridView.custom(
+                gridDelegate: _kDayPickerGridDelegate,
+                physics: ClampingScrollPhysics(),
+                childrenDelegate: SliverChildListDelegate(
+                  labels,
+                  addRepaintBoundaries: false,
+                ),
+                padding: EdgeInsets.zero,
               ),
-              padding: EdgeInsets.zero,
             ),
           ),
         ],
       ),
     );
+  }
+}
+
+class CustomBehavior extends ScrollBehavior {
+  @override
+  Widget buildViewportChrome(
+      BuildContext context, Widget child, AxisDirection axisDirection) {
+    return child;
   }
 }
